@@ -42,6 +42,8 @@ class func():
 		lifes.clear()
 		ship.x = 600
 		ship.y = 600
+		config.moving_left = 0
+		config.moving_right = 0
 		config.stage = 0
 		config.score = 0
 		config.asteroid_vel = 1
