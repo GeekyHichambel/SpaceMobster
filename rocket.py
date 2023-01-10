@@ -39,6 +39,7 @@ class func():
 
 	def reset(self):
 		config.asteroid_list.clear()
+		lifes.clear()
 		config.stage = 0
 		config.score = 0
 		config.asteroid_vel = 1
