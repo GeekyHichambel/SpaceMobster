@@ -218,6 +218,7 @@ class SCENE():
 		screen.blit(stage_text,(950, 10))
 		screen.blit(score_text,(420,10))
 
+		print(len(lifes))
 		for i in range(len(lifes)):	
 			lifes[i].draw(screen)
 
