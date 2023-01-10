@@ -1,8 +1,0 @@
-Game download link = https://drive.google.com/file/d/1T5HO5dC3BrNmvXAM267hYTh4riWJC1yX/view?usp=sharing
-
-Steps for installing:
-
-> - First download the rar file from the link above.
-> - Extracrt the rar file after downloading.
-> - U will get a Spacegame folder after extraction.
-> - Now, Just run the supaspacegame.py and enjoy. 
