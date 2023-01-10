@@ -1,4 +1,4 @@
-#Image loading
+#Image loading for game
 import pygame as pg
 import os
 
