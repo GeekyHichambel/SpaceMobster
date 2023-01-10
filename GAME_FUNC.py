@@ -93,6 +93,8 @@ class SCENE():
 			if event.type == pg.KEYDOWN:
 
 				if event.key == pg.K_ESCAPE:
+					res.reset()
+					res.restart()
 					switch_sfx.play()
 					config.switch = 1
 
@@ -178,14 +180,14 @@ class SCENE():
 				if event.key == pg.K_d:
 					config.moving_right = False
 
+		screen.blit(ig.background,(0,0))
+		ship.draw(screen)
+
 		if config.moving_left:
 			ship.move(1)
 
-		if config.moving_right:
+		elif config.moving_right:
 			ship.move(2)
-
-		screen.blit(ig.background,(0,0))
-		ship.draw(screen)
 			#drawing asteroid_list
 		for asteroid in config.asteroid_list:
 			asteroid.draw(screen)
@@ -218,7 +220,6 @@ class SCENE():
 		screen.blit(stage_text,(950, 10))
 		screen.blit(score_text,(420,10))
 
-		print(len(lifes))
 		for i in range(len(lifes)):	
 			lifes[i].draw(screen)
 
@@ -248,8 +249,8 @@ class SCENE():
 
 				if event.key == pg.K_RETURN:
 					switch_sfx.play()
-					res.restart()
 					res.reset()
+					res.restart()
 					music.load()
 					break
 
