@@ -5,7 +5,7 @@ from pygame import mixer
 import config
 
 pg.init()
-#music resources
+#music resources <**>
 switch_sfx = pg.mixer.Sound(os.path.join("resources","switch__.wav"))
 selector_sfx = pg.mixer.Sound(os.path.join("resources","selector.mp3"))
 life_lost_sfx = pg.mixer.Sound(os.path.join("resources","life_lost.wav"))
