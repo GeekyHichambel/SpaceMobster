@@ -8,7 +8,7 @@ The danger in this game are the falling asteroids that might break the player sh
 
 ## KEY-FEATURES
 > - Retro style space themed graphics
-> - Endless joy with constanly increasing difficulty level
+> - Endless joy with constantly increasing difficulty level
 > - Neat and Clean sfx
 > - Highly responsive controls    
 
