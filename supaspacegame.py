@@ -4,7 +4,7 @@ import sys
 from GAME_FUNC import scene
 import config
 import music
-
+import images as ig
 #screen
 screen_width = 1280
 screen_height = 720
@@ -15,6 +15,7 @@ pg.init()
 config.intitialize()
 music.volume_set()
 music.load()
+ig.perf()
 #game_loop
 while config.game_state:
 
