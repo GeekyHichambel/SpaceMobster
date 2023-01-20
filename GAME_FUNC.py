@@ -125,6 +125,8 @@ class SCENE():
 # - - - - - - - - MAIN-GAME - - - - - - #
 	def main_game(self,screen):
 		global window
+		FPS = fps.get_fps().__int__()
+		fps.tick(frames)
 		if len(config.asteroid_list) == 0:
 			config.stage += 1
 			config.asteroid_vel = round(config.asteroid_vel+0.8,1) 
@@ -136,15 +138,14 @@ class SCENE():
 			for i in range(config.asteroid_num):
 				asteroid = Asteroid(random.randrange(0,1180), random.randrange(config.y_max,config.y_min)) 
 				config.asteroid_list.append(asteroid)
-				asteroid_grp.add(asteroid)
 
 		config.start_time = pg.time.get_ticks()
 		config.score += round(config.start_time/1000)
 
 		screen.fill('black')
-		fps.tick(frames)
 		stage_text = game_font.render(f"STAGE: {config.stage}", 1, (102,0,102))
 		score_text = game_font.render(f"SCORE: {config.score}", 1, (102,0,102))
+		fps_text = small_game_font.render(f"FPS: {FPS}",1,(255,255,255))
 
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
@@ -219,6 +220,7 @@ class SCENE():
 
 		screen.blit(stage_text,(950, 10))
 		screen.blit(score_text,(420,10))
+		screen.blit(fps_text,(1175,680))
 
 		for i in range(len(lifes)):	
 			lifes[i].draw(screen)
@@ -261,7 +263,7 @@ class SCENE():
 		pg.display.update()
 
 #obstacles
-class Asteroid(pg.sprite.Sprite):
+class Asteroid():
 	                    
 	def __init__(self,x ,y):
 		pg.sprite.Sprite.__init__(self)
@@ -269,25 +271,19 @@ class Asteroid(pg.sprite.Sprite):
 		self.x = x
 		self.y = y
 		self.mask = pg.mask.from_surface(self.image)
-		self.rect = self.image.get_rect(topleft=(self.x,self.y))
 
 	def move(self):
 		self.y += config.asteroid_vel
-		self.rect.y = self.y
 
 	def draw(self,screen):
 		for asteroid in config.asteroid_list:
 			screen.blit(self.image,(self.x,self.y))
 
 	def collision(self,obj):
-		if self.rect.colliderect(obj.rect):
+		collide_mask = self.mask.overlap_mask(obj.mask, (self.x - obj.x, self.y - obj.y))
+		if collide_mask.count() > 0:
 			return True
 		else:
 			return False 
-
-
-#groups:
-rocket_grp = pg.sprite.GroupSingle(ship)
-asteroid_grp = pg.sprite.Group()
-
+			
 scene = SCENE()
