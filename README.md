@@ -1,4 +1,4 @@
-# SpaceGame
+# SpaceMobster
 An endless 2d space game packed with lots of joy.
 
 ## DESCRIPTION 
