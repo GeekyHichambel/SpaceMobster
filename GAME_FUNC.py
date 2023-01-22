@@ -1,4 +1,4 @@
-#Game functions
+#Game functions file
 import pygame as pg
 import os
 import random
