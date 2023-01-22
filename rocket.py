@@ -3,6 +3,7 @@ import pygame as pg
 import images as ig
 import config
 
+#Player class
 class ROCKET():
 	def __init__(self,x,y,size):
 		self.image = ig.rocket
