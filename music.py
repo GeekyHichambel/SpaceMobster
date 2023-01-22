@@ -10,7 +10,7 @@ switch_sfx = pg.mixer.Sound(os.path.join("resources","switch__.wav"))
 selector_sfx = pg.mixer.Sound(os.path.join("resources","selector.mp3"))
 life_lost_sfx = pg.mixer.Sound(os.path.join("resources","life_lost.wav"))
 game_over_sfx = pg.mixer.Sound(os.path.join("resources","game_over.wav"))
-#functions
+#music functions
 def load():
 	mixer.music.load(os.path.join("resources","CYBERPUNK.mp3"))
 	mixer.music.play(-1)
