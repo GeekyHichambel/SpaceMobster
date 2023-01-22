@@ -1,4 +1,4 @@
-#Image loading
+#Image loading file
 import pygame as pg
 import os
 
@@ -15,6 +15,7 @@ control_screen = pg.image.load(os.path.join("resources","controlpage.jpg"))
 game_over = pg.image.load(os.path.join("resources","game_over.png"))
 main_menu = pg.image.load(os.path.join("resources","main_menu.jpg"))
 
+#method for image conversion
 def perf():
 	rocket.convert_alpha()
 	rocket1.convert_alpha()
@@ -29,6 +30,7 @@ def perf():
 	game_over.convert_alpha()
 	main_menu.convert_alpha()
 
+#class for moving background effect
 class back():
 
 	def __init__(self,image):
