@@ -5,7 +5,7 @@ from GAME_FUNC import scene
 import config
 import music
 import images as ig
-#screen
+#screen_setup
 screen_width = 1280
 screen_height = 720
 screen = pg.display.set_mode((screen_width,screen_height))
