@@ -2,6 +2,7 @@
 from images import *
 import os 
 
+#initialization method
 def intitialize():
 	global game_state
 	global switch
