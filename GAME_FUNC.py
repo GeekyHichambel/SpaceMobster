@@ -319,8 +319,7 @@ class Asteroid():
 		self.y += config.asteroid_vel
 
 	def draw(self,screen):
-		for asteroid in config.asteroid_list:
-			screen.blit(self.image,(self.x,self.y))
+		screen.blit(self.image,(self.x,self.y))
 
 	def collision(self,obj):
 		collide_mask = self.mask.overlap_mask(obj.mask, (self.x - obj.x, self.y - obj.y))
