@@ -23,6 +23,11 @@ def intitialize():
 	global y_min
 	global link_color
 	global current_rocket
+	global powers_count
+	global powers
+	global power_list
+	global power_ups
+	global spawned
 
 	# - - - - high_score_storage - - - - #
 	if os.path.exists('high_score.txt'):
@@ -32,12 +37,17 @@ def intitialize():
 	else:
 		high_score = 0
 	# - - - - - - - - - - - - - - - - - #
+	spawned = False
+	powers_count = 0
+	powers = [wipeout,rocket]
+	power_ups = []
+	power_list = []
 	link_color = (255,255,255)
 	y_max = -2500
 	y_min = -200
 	asteroid_num = 10
 	asteroid_list = []
-	asteroid_vel = 1
+	asteroid_vel = 2
 	moving_left = False
 	moving_right = False 
 	last_score = None
