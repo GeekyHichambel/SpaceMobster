@@ -14,6 +14,8 @@ start_button_2 = pg.image.load(os.path.join("resources","Startbut(2).png"))
 control_screen = pg.image.load(os.path.join("resources","controlpage.jpg"))
 game_over = pg.image.load(os.path.join("resources","game_over.png"))
 main_menu = pg.image.load(os.path.join("resources","main_menu.jpg"))
+wipeout = pg.image.load(os.path.join("resources","pow_1.png"))
+white_bg = pg.image.load(os.path.join("resources","white.png"))
 
 #method for image conversion
 def perf():
@@ -29,6 +31,8 @@ def perf():
 	control_screen.convert_alpha()
 	game_over.convert_alpha()
 	main_menu.convert_alpha()
+	wipeout.convert_alpha()
+	white_bg.convert_alpha()
 
 #class for moving background effect
 class back():
