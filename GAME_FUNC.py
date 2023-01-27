@@ -1,4 +1,4 @@
-#Game functions file
+#Game functions
 import pygame as pg
 import os
 import random
@@ -10,6 +10,9 @@ from music import *
 import config
 import webbrowser
 from rocket import lifes
+from rocket import life1
+from rocket import life2
+from rocket import life3
 from rocket import res
 from rocket import ship
 #initializations
@@ -17,6 +20,12 @@ pg.font.init()
 fps = pg.time.Clock()
 frames = 60
 window = 1
+wipe = False
+counter = 0
+
+def UD():
+	pg.display.update()
+
 #text
 game_font = pg.font.SysFont("bahnschrift", 50 , bold = True)
 small_game_font = pg.font.SysFont("comic sans", 25 , bold = True)
@@ -73,8 +82,7 @@ class SCENE():
 
 				if event.key == pg.K_KP_MINUS:
 					music.volume_minus() 
-
-		pg.display.update()
+		UD()
 			
 # - - - - - - - CONTROLS - - - - - - #
 	def control_menu(self,screen):
@@ -121,15 +129,21 @@ class SCENE():
 
 		screen.blit(high_score_text,(880,380))
 		screen.blit(creator,(880,490))
-		pg.display.update()
+		UD()
 
 # - - - - - - - - MAIN-GAME - - - - - - #
 	def main_game(self,screen):
 		global window
+		global wipe
+		global counter
+		global refresh 
 		FPS = fps.get_fps().__int__()
 		fps.tick(frames)
 		if len(config.asteroid_list) == 0:
 			config.stage += 1
+			if config.stage != 1 and config.stage%2 != 0:
+				config.spawned = False
+
 			config.asteroid_vel = round(config.asteroid_vel+0.8,1) 
 			print('SHOWER SPEED :'+str(config.asteroid_vel))
 			if config.asteroid_num + config.stage >= 20:
@@ -138,12 +152,18 @@ class SCENE():
 				config.asteroid_num += config.stage
 			for i in range(config.asteroid_num):
 				asteroid = Asteroid(random.randrange(0,1180), random.randrange(config.y_max,config.y_min)) 
-				config.asteroid_list.append(asteroid)
+				config.asteroid_list.append(asteroid)		 
+
+		if len(config.power_list) == 0 and config.stage%2 == 0 and config.spawned == False:
+			power = Powers(random.randrange(0,1180), random.randrange(config.y_max,config.y_min))
+			config.power_list.append(power)
+			print('spawned')
 
 		screen.fill('black')
 		stage_text = game_font.render(f"STAGE: {config.stage}", 1, (102,0,102))
 		score_text = game_font.render(f"SCORE: {config.score}", 1, (102,0,102))
 		fps_text = small_game_font.render(f"FPS: {FPS}",1,(255,255,255))
+		wipe_out_text = small_game_font.render(f"WIPE OUTS: {config.powers_count}",1,(255,255,255))
 
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
@@ -171,6 +191,9 @@ class SCENE():
 				if event.key == pg.K_KP_MINUS:
 					music.volume_minus()
 
+				if event.key == pg.K_SPACE and config.powers_count > 0:
+					wipe = True
+
 			if event.type == pg.KEYUP:
 
 				if event.key == pg.K_a:
@@ -180,7 +203,7 @@ class SCENE():
 					config.moving_right = False
 
 		BACK.moving_bg(screen,config.asteroid_vel)
-		
+
 		#drawing_rocket	
 		config.current_rocket += 0.3
 		if config.current_rocket >= 5:
@@ -198,6 +221,11 @@ class SCENE():
 			#drawing asteroid_list
 		for asteroid in config.asteroid_list:
 			asteroid.draw(screen)
+
+		for power in config.power_list:
+			power.draw(screen)
+			power.move()
+			power.ifhit(ship)
 			#moving and removing asteroid_list 
 		for asteroid in config.asteroid_list:
 			asteroid.move()
@@ -216,7 +244,7 @@ class SCENE():
 					lifes.pop(config.lifes)
 					life_lost_sfx.play()
 
-			elif (asteroid.y + config.asteroid_vel) > 720:
+			elif (asteroid.y + config.asteroid_vel) >= 720:
 				config.asteroid_list.remove(asteroid)
 				config.score += 200*config.stage
 				print("ASTEROIDS REMAINING: "+str(len(config.asteroid_list)))
@@ -227,11 +255,20 @@ class SCENE():
 		screen.blit(stage_text,(950, 10))
 		screen.blit(score_text,(420,10))
 		screen.blit(fps_text,(1175,680))
+		screen.blit(wipe_out_text,(10,680))
 
 		for i in range(len(lifes)):	
 			lifes[i].draw(screen)
 
-		pg.display.update()
+		if wipe == True:
+			wipeout_sfx.play()
+			config.asteroid_list.clear()
+			if counter < 10000000:
+				counter += 2
+				pg.draw.rect(screen, (255,255,255), (0,0,1280,720))
+			config.powers_count -= 1
+			wipe = False
+		UD()
 
 #- - - - - - GAME-OVER - - - - - - -#
 	def game_over(self,screen):
@@ -266,7 +303,7 @@ class SCENE():
 		screen.blit(game_over_text,(80,500))
 		screen.blit(score_text,(500,580))
 		screen.blit(high_score_text,(500,660))
-		pg.display.update()
+		UD()
 
 #obstacles
 class Asteroid():
@@ -290,6 +327,57 @@ class Asteroid():
 		if collide_mask.count() > 0:
 			return True
 		else:
-			return False 
-			
+			return False
+
+class Powers():
+		
+	def __init__(self,x , y):
+		self.image = random.choice(config.powers)
+		self.choice = self.image
+		if self.image == ig.wipeout:
+			self.image = pg.transform.scale(self.image,(100,100))
+		else:
+			self.image = pg.transform.scale(self.image,(80,80))
+		self.x = x
+		self.y = y
+		self.mask = pg.mask.from_surface(self.image)
+		
+	def move(self):
+		self.y += config.asteroid_vel
+
+	def draw(self,screen):
+		screen.blit(self.image,(self.x,self.y))		
+
+	def ifhit(self,obj):
+		collide_mask = self.mask.overlap_mask(obj.mask, (self.x - obj.x, self.y - obj.y))
+		if collide_mask.count() > 0 and self.choice == ig.wipeout:
+			life_gain_sfx.play()
+			config.powers_count += 1
+			config.power_list.clear()
+			config.spawned = True
+
+		elif collide_mask.count() > 0 and self.choice == ig.rocket:
+			if len(lifes) == 3:
+				print('lifes full')
+
+			elif len(lifes) == 2:
+				config.lifes += 1
+				lifes.append(life3)
+
+			elif len(lifes) == 1:
+				config.lifes += 1
+				lifes.append(life2)
+
+			elif len(lifes) == 0:
+				config.lifes += 1
+				lifes.append(life1)
+
+			life_gain_sfx.play()
+			config.power_list.clear()
+			config.spawned = True
+
+		elif self.y + config.asteroid_vel >=720:
+			config.spawned = True
+			config.power_list.clear()			
+
 scene = SCENE()
