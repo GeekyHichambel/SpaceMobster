@@ -41,6 +41,9 @@ class func():
 
 	def reset(self):
 		config.asteroid_list.clear()
+		config.power_list.clear()
+		config.powers_count = 0
+		config.spawned = False
 		lifes.clear()
 		ship.x = 600
 		ship.y = 600
@@ -48,7 +51,7 @@ class func():
 		config.moving_right = False
 		config.stage = 0
 		config.score = 0
-		config.asteroid_vel = 1
+		config.asteroid_vel = 2
 		config.asteroid_num = 10
 		config.switch = 1
 		config.y_max = -2500
