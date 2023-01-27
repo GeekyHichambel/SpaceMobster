@@ -21,7 +21,7 @@ while config.game_state:
 
 	if config.switch == 1:
 		scene.main_menu(screen)
-
+		
 	elif config.switch == 2:
 		scene.control_menu(screen)
 
@@ -29,4 +29,4 @@ while config.game_state:
 		scene.main_game(screen)
 
 	elif config.switch == 4:
-		scene.game_over(screen)
+		scene.game_over(screen)	
