@@ -22,9 +22,6 @@ frames = 60
 window = 1
 wipe = False
 counter = 0
-i = 0
-font_y = -50
-move_font = False
 
 def UD():
 	pg.display.update()
@@ -33,7 +30,6 @@ def UD():
 game_font = pg.font.SysFont("bahnschrift", 50 , bold = True)
 small_game_font = pg.font.SysFont("comic sans", 25 , bold = True)
 super_small_game_font = pg.font.SysFont("comic sans", 20, bold = True)
-special_game_gont = pg.font.SysFont("stencil",75,bold = False)
 class SCENE():
 	def __init__(self):
 		pass
@@ -140,11 +136,8 @@ class SCENE():
 		global window
 		global wipe
 		global counter
-		global i
-		global refresh
-		global font_y
-		global move_font 
-		FPS = int(fps.get_fps())
+		global refresh 
+		FPS = fps.get_fps().__int__()
 		fps.tick(frames)
 		if len(config.asteroid_list) == 0:
 			config.stage += 1
@@ -157,7 +150,7 @@ class SCENE():
 				config.asteroid_num = 20
 			else:
 				config.asteroid_num += config.stage
-			for a in range(config.asteroid_num):
+			for i in range(config.asteroid_num):
 				asteroid = Asteroid(random.randrange(0,1180), random.randrange(config.y_max,config.y_min)) 
 				config.asteroid_list.append(asteroid)		 
 
@@ -171,7 +164,6 @@ class SCENE():
 		score_text = game_font.render(f"SCORE: {config.score}", 1, (102,0,102))
 		fps_text = small_game_font.render(f"FPS: {FPS}",1,(255,255,255))
 		wipe_out_text = small_game_font.render(f"WIPE OUTS: {config.powers_count}",1,(255,255,255))
-		what_stage_text = special_game_gont.render(f"STAGE {config.stage} UPCOMING",1,(102,0,102))
 
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
@@ -180,9 +172,6 @@ class SCENE():
 			if event.type == pg.KEYDOWN:
 
 				if event.key == pg.K_ESCAPE:
-					i = 0
-					font_y = -50
-					move_font = False
 					switch_sfx.play()
 					res.reset()
 					res.restart()					
@@ -214,19 +203,6 @@ class SCENE():
 					config.moving_right = False
 
 		BACK.moving_bg(screen,config.asteroid_vel)
-
-		if i < config.stage:
-			move_font = True
-
-		if move_font:
-			if font_y + config.asteroid_vel >= 720:
-				font_y = -50
-				i += 1
-				move_font = False
-			
-			else:
-				screen.blit(what_stage_text,(310,font_y))
-				font_y += config.asteroid_vel
 
 		#drawing_rocket	
 		config.current_rocket += 0.3
@@ -268,7 +244,7 @@ class SCENE():
 					lifes.pop(config.lifes)
 					life_lost_sfx.play()
 
-			if (asteroid.y + config.asteroid_vel) >= 720:
+			elif (asteroid.y + config.asteroid_vel) >= 720:
 				config.asteroid_list.remove(asteroid)
 				config.score += 200*config.stage
 				print("ASTEROIDS REMAINING: "+str(len(config.asteroid_list)))
@@ -281,24 +257,21 @@ class SCENE():
 		screen.blit(fps_text,(1175,680))
 		screen.blit(wipe_out_text,(10,680))
 
-		for a in range(len(lifes)):	
-			lifes[a].draw(screen)
+		for i in range(len(lifes)):	
+			lifes[i].draw(screen)
 
 		if wipe == True:
 			wipeout_sfx.play()
 			config.asteroid_list.clear()
 			if counter < 10000000:
 				counter += 2
-				screen.blit(ig.white_bg,(0,0))
+				pg.draw.rect(screen, (255,255,255), (0,0,1280,720))
 			config.powers_count -= 1
 			wipe = False
 		UD()
 
 #- - - - - - GAME-OVER - - - - - - -#
 	def game_over(self,screen):
-		global i
-		global font_y
-		global move_font 
 		music.unload()
 		screen.fill('black')
 		fps.tick(frames)
@@ -320,9 +293,6 @@ class SCENE():
 			if event.type == pg.KEYDOWN:
 
 				if event.key == pg.K_RETURN:
-					i = 0
-					font_y = -50
-					move_font = False
 					switch_sfx.play()
 					res.reset()
 					res.restart()
@@ -363,7 +333,10 @@ class Powers():
 	def __init__(self,x , y):
 		self.image = random.choice(config.powers)
 		self.choice = self.image
-		self.image = pg.transform.scale(self.image,(80,80))
+		if self.image == ig.wipeout:
+			self.image = pg.transform.scale(self.image,(100,100))
+		else:
+			self.image = pg.transform.scale(self.image,(80,80))
 		self.x = x
 		self.y = y
 		self.mask = pg.mask.from_surface(self.image)

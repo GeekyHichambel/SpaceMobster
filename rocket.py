@@ -1,3 +1,4 @@
+
 #Rocket_object
 import pygame as pg
 import images as ig
@@ -68,3 +69,4 @@ life3 = ROCKET(140,10,0.7)
 lifes.append(life1)
 lifes.append(life2)
 lifes.append(life3)
+

@@ -29,4 +29,4 @@ while config.game_state:
 		scene.main_game(screen)
 
 	elif config.switch == 4:
-		scene.game_over(screen)		
+		scene.game_over(screen)
