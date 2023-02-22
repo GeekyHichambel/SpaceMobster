@@ -39,7 +39,7 @@ You should have python and below listed packages installed on your system.
 
 <p align="center">GAMEPLAY</p>
 
-![alt tag](https://github.com/GeekyHichambel/SpaceMobster/blob/master/gameplay.gif "GAMEPLAY")
+![alt tag](https://user-images.githubusercontent.com/109455495/220693145-9af87820-1abf-4cd5-87dc-d5cac0134c16.gif "GAMEPLAY")
 
 ## Credits
 The game is solely designed by me and all the content used is non-copyrighted.
