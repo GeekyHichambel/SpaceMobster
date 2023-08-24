@@ -60,4 +60,3 @@ def volume_minus():
 		config.volume-=(0.1)
 		config.volume = round(config.volume,1)
 		print(config.volume)
-		volume_set()
