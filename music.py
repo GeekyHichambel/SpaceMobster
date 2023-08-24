@@ -35,24 +35,12 @@ def volume_mute():
 	if config.volume > 0.0:
 		config.volume = 0.0
 		print('muted')
-		mixer.music.set_volume(config.volume)
-		switch_sfx.set_volume(config.volume)
-		selector_sfx.set_volume(config.volume)
-		life_lost_sfx.set_volume(config.volume)
-		life_gain_sfx.set_volume(config.volume) 
-		game_over_sfx.set_volume(config.volume)
-		wipeout_sfx.set_volume(config.volume)
+		volume_set()
 
 	else:
 		config.volume = 0.2
 		print('unmuted')
-		mixer.music.set_volume(config.volume)
-		switch_sfx.set_volume(config.volume)
-		selector_sfx.set_volume(config.volume)
-		life_lost_sfx.set_volume(config.volume)
-		life_gain_sfx.set_volume(config.volume)
-		game_over_sfx.set_volume(config.volume)
-		wipeout_sfx.set_volume(config.volume)
+		volume_set()
 
 def volume_plus():
 	if config.volume == 1.0:
@@ -62,13 +50,7 @@ def volume_plus():
 		config.volume+=(0.1)
 		config.volume = round(config.volume,1)
 		print(config.volume)
-		mixer.music.set_volume(config.volume)
-		switch_sfx.set_volume(config.volume)
-		selector_sfx.set_volume(config.volume)
-		life_lost_sfx.set_volume(config.volume)
-		life_gain_sfx.set_volume(config.volume) 
-		game_over_sfx.set_volume(config.volume)
-		wipeout_sfx.set_volume(config.volume)
+		volume_set()
 
 def volume_minus():
 	if config.volume == 0.0:
@@ -78,10 +60,4 @@ def volume_minus():
 		config.volume-=(0.1)
 		config.volume = round(config.volume,1)
 		print(config.volume)
-		mixer.music.set_volume(config.volume)
-		switch_sfx.set_volume(config.volume)
-		selector_sfx.set_volume(config.volume)
-		life_lost_sfx.set_volume(config.volume)
-		life_gain_sfx.set_volume(config.volume) 
-		game_over_sfx.set_volume(config.volume)
-		wipeout_sfx.set_volume(config.volume)
+		volume_set()

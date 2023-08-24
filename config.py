@@ -2,11 +2,13 @@
 from images import *
 import os 
 
+#initialization method
 def intitialize():
 	global game_state
 	global switch
 	global stage
 	global volume
+	global velocity
 	global start_rect
 	global control_rect
 	global lifes
@@ -46,9 +48,9 @@ def intitialize():
 	y_min = -200
 	asteroid_num = 10
 	asteroid_list = []
-	asteroid_vel = 2
-	moving_left = False
-	moving_right = False 
+	asteroid_vel = 3
+	moving_left = [False,0]
+	moving_right = [False,0] 
 	last_score = None
 	game_state = True
 	current_rocket = 0
@@ -57,5 +59,6 @@ def intitialize():
 	switch = 1
 	stage = 0
 	volume = 0.2
+	velocity = 0
 	start_rect = start_button.get_rect(center = [640,400])
 	control_rect = control_button.get_rect(center = [640,600]) 

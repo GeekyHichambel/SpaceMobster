@@ -10,7 +10,7 @@ screen_width = 1280
 screen_height = 720
 screen = pg.display.set_mode((screen_width,screen_height))
 pg.display.set_caption('Space Mobster')
-#initializations
+#initialization
 pg.init()
 config.intitialize()
 music.volume_set()
@@ -29,4 +29,4 @@ while config.game_state:
 		scene.main_game(screen)
 
 	elif config.switch == 4:
-		scene.game_over(screen)	
+		scene.game_over(screen)

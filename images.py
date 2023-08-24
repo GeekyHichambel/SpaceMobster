@@ -1,4 +1,4 @@
-#Image loading
+#Image loading file
 import pygame as pg
 import os
 
@@ -11,12 +11,13 @@ control_button = pg.image.load(os.path.join("resources","Controlbut.png"))
 control_button_2 = pg.image.load(os.path.join("resources","Controlbut(2).png"))
 start_button = pg.image.load(os.path.join("resources","Startbut.png"))
 start_button_2 = pg.image.load(os.path.join("resources","Startbut(2).png"))
-control_screen = pg.image.load(os.path.join("resources","controlpage.jpg"))
+control_screen = pg.image.load(os.path.join("resources","controlpage.png"))
 game_over = pg.image.load(os.path.join("resources","game_over.png"))
-main_menu = pg.image.load(os.path.join("resources","main_menu.jpg"))
+main_menu = pg.image.load(os.path.join("resources","main_menu.png"))
 wipeout = pg.image.load(os.path.join("resources","pow_1.png"))
 white_bg = pg.image.load(os.path.join("resources","white.png"))
 
+#method for image conversion
 def perf():
 	rocket.convert_alpha()
 	rocket1.convert_alpha()
@@ -33,6 +34,7 @@ def perf():
 	wipeout.convert_alpha()
 	white_bg.convert_alpha()
 
+#class for moving background effect
 class back():
 
 	def __init__(self,image):

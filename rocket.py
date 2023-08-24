@@ -3,6 +3,7 @@ import pygame as pg
 import images as ig
 import config
 
+#Player class
 class ROCKET():
 	def __init__(self,x,y,size):
 		self.image = ig.rocket
@@ -11,7 +12,6 @@ class ROCKET():
 		self.size = size
 		self.image = pg.transform.scale(self.image,((100*self.size), (100*self.size)))
 		self.mask = pg.mask.from_surface(self.image)
-		self.vel = 8
 
 	def draw(self,screen):
 		screen.blit(self.image,(self.x, self.y))
@@ -21,12 +21,12 @@ class ROCKET():
 		self.image = pg.transform.scale(self.image,((100*self.size), (100*self.size)))
 		screen.blit(self.image,(self.x, self.y))
 
-	def move(self,direction):
-		if direction == 1 and (self.x + self.vel) > 0:
-			self.x -= self.vel
+	def move(self,direction,vel):
+		if direction == 1 and (self.x + vel) > 0:
+			self.x -= vel
 
-		elif direction == 2 and (self.x + self.vel) < 1180:
-			self.x += self.vel		
+		elif direction == 2 and (self.x + vel) < 1180:
+			self.x += vel	
 
 class func():
 
@@ -50,7 +50,7 @@ class func():
 		config.moving_right = False
 		config.stage = 0
 		config.score = 0
-		config.asteroid_vel = 2
+		config.asteroid_vel = 3
 		config.asteroid_num = 10
 		config.switch = 1
 		config.y_max = -2500
